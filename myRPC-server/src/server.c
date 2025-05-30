@@ -16,11 +16,9 @@
 
 volatile sig_atomic_t stop;
 
-
 void handle_signal(int sig) {
     stop = 1;
 }
-
 
 int user_allowed(const char *username) {
     FILE *file = fopen("/etc/myRPC/users.conf", "r");
@@ -49,7 +47,6 @@ int user_allowed(const char *username) {
     return allowed;
 }
 
-
 void execute_command(const char *command, char *stdout_file, char *stderr_file) {
     char cmd[BUFFER_SIZE];
     snprintf(cmd, BUFFER_SIZE, "%s >%s 2>%s", command, stdout_file, stderr_file);
@@ -57,17 +54,6 @@ void execute_command(const char *command, char *stdout_file, char *stderr_file) 
 }
 
 int main() {
-	pid_t pid = fork();
-	if (pid < 0) exit(EXIT_FAILURE);
-	if (pid > 0) exit(EXIT_SUCCESS);
-
-	umask(0);
-	if (setsid() < 0) exit(EXIT_FAILURE);
-
-	chdir("/");
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	close(STDERR_FILENO);
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
 

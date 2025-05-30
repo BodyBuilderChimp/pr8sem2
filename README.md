@@ -75,40 +75,13 @@ sudo dpkg -i deb/libmysyslog_1.0-1_amd64.deb
 1. Создайте конфигурационный файл `/etc/myRPC/myRPC.conf` для настройки параметров сервера. Пример файла:
 ```conf
 sudo mkdir -p /etc/myRPC
-echo -e "port=1234\nsocket_type=stream" | sudo tee /etc/myRPC/myRPC.conf
+echo -e "port=1337\nsocket_type=stream" | sudo tee /etc/myRPC/myRPC.conf
 ```
 
 2. Создайте файл пользователей `/etc/myRPC/users.conf`, в котором указаны разрешённые пользователи:
 ```conf
-echo "sa" | sudo tee /etc/myRPC/users.conf
+echo "igor" | sudo tee /etc/myRPC/users.conf
 ```
-
-## Использование
-
-### myRPC-client
-
-Клиентское приложение `myRPC-client` позволяет отправлять команды на сервер для выполнения. Примеры использования:
-
-1. Отправка команды с использованием потокового сокета (TCP):
-```sh
-# TCP-соединение
-myrpc-client -h 127.0.0.1 -p 1337 -s -c "date"
-
-# UDP-соединение
-myrpc-client -h 127.0.0.1 -p 1337 -d -c "date"
-```
-
-### myrpc-server
-
-Серверное приложение `myrpc-server` запускается на сервере и ожидает подключения от клиентов. Для запуска сервера выполните команду:
-
-```sh
-sudo myrpc-server
-```
-
-## Логирование и отладка
-
-Сервер `myrpc-server` использует библиотеку `libmysyslog` для ведения журнала событий. Все события записываются в файл `/var/log/myrpc.log`. Логи содержат информацию о подключениях клиентов, выполнении команд и возможных ошибках.
 
 
 
